@@ -20,6 +20,15 @@ Every asset stays fully editable. Change one seed and you get a new building, or
 
 > This repository hosts the **product page and media** only. The asset library is available on Superhive.
 
+## Right inside Blender
+
+Pick a city in Blender's Asset Browser and drop it into the viewport. It arrives with its generator as a modifier:
+change Seed and the whole town is rebuilt, raise Blocks and it grows.
+
+<p align="center"><img src="media/blender_dragdrop.gif" alt="Dragging a city from the Asset Browser into the viewport and changing its modifier inputs" width="100%"></p>
+
+![Blender UI](media/blender_ui.jpg)
+
 <p align="center"><img src="media/themes.gif" alt="The seven city generators" width="720"></p>
 
 ## Highlights
