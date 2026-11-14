@@ -7,6 +7,8 @@
 <meta name="description" content="24 procedural building styles and 7 stylized city generators for Blender, built with Geometry Nodes. Drag and drop, fully editable.">
 <base target="_blank">
 <style>
+  /* The whole page scales with its width (1rem = 16px at 760px wide, up to 950px), so an iframe with a fixed
+     aspect ratio always fits it exactly. Design width: 760px. */
   :root {
     --bg: #ffffff;
     --ink: #1b1d22;
@@ -15,94 +17,89 @@
     --soft: #f5f6f9;
     --accent: #e8793a;
     --accent-2: #2a9d8f;
-    --accent-ink: #ffffff;
-    --radius: 14px;
-    --shadow: 0 1px 2px rgba(20, 24, 33, .06), 0 8px 24px rgba(20, 24, 33, .06);
+    --radius: .875rem;
+    --shadow: 0 .0625rem .125rem rgba(20, 24, 33, .06), 0 .5rem 1.5rem rgba(20, 24, 33, .06);
   }
+  html { font-size: clamp(10px, calc(100vw / 47.5), 20px); }
   * { box-sizing: border-box; }
-  html, body { margin: 0; padding: 0; }
+  html, body { margin: 0; padding: 0; background: var(--bg); }
   body {
-    background: var(--bg);
     color: var(--ink);
-    font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font: 1rem/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
   }
-  .page { max-width: 820px; margin: 0 auto; padding: 8px 16px 40px; }
+  .page { max-width: 47.5rem; margin: 0 auto; padding: .25rem 1rem 1.5rem; }
   img { display: block; width: 100%; height: auto; border-radius: var(--radius); }
   h1, h2, h3 { line-height: 1.15; letter-spacing: -0.02em; margin: 0; }
-  h1 { font-size: 44px; font-weight: 800; }
-  h2 { font-size: 30px; font-weight: 800; margin-bottom: 10px; }
-  h3 { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
-  p { margin: 0 0 12px; }
+  h1 { font-size: 2.75rem; font-weight: 800; margin-top: .5rem; }
+  h2 { font-size: 1.875rem; font-weight: 800; margin-bottom: .625rem; }
+  h3 { font-size: 1.125rem; font-weight: 700; margin-bottom: .25rem; }
+  p { margin: 0 0 .75rem; }
   .muted { color: var(--muted); }
-  .eyebrow { font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--accent-2); }
-  section { margin-top: 56px; }
-  .lead { font-size: 18px; color: #3a3f4a; margin-top: 14px; }
+  .eyebrow { font-size: .8125rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--accent-2); }
+  section { margin-top: 3.25rem; }
+  .lead { font-size: 1.125rem; color: #3a3f4a; margin-top: .875rem; }
   .grad {
     background: linear-gradient(90deg, var(--accent), #d9524a 45%, var(--accent-2));
     -webkit-background-clip: text; background-clip: text; color: transparent;
   }
-  .badges { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 22px; }
+  .badges { display: flex; flex-wrap: wrap; gap: .5rem; margin: 1.125rem 0 1.375rem; }
   .badge {
-    font-size: 13px; font-weight: 600; padding: 6px 12px; border-radius: 999px;
+    font-size: .8125rem; font-weight: 600; padding: .375rem .75rem; border-radius: 999px;
     background: var(--soft); border: 1px solid var(--line); color: #2c313b;
   }
-  .badge.hot { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+  .badge.hot { background: var(--accent); border-color: var(--accent); color: #fff; }
   .frame { border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); border: 1px solid var(--line); background: #e9eef1; }
   .frame img { border-radius: 0; }
   .frame img.crop { aspect-ratio: 1400 / 1180; object-fit: cover; object-position: top; }
-  .cap { font-size: 13px; color: var(--muted); margin-top: 8px; text-align: center; }
-  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 22px; }
-  .stat { background: var(--soft); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 10px; text-align: center; }
-  .stat b { display: block; font-size: 28px; line-height: 1.1; letter-spacing: -0.02em; }
-  .stat span { font-size: 13px; color: var(--muted); }
-  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-  .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-  .card { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 18px; box-shadow: var(--shadow); }
-  .card p { font-size: 15px; color: #444a56; margin: 0; }
+  figure { margin: 0; }
+  .cap { font-size: .8125rem; color: var(--muted); margin-top: .5rem; text-align: center; }
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: .625rem; margin-top: 1.375rem; }
+  .stat { background: var(--soft); border: 1px solid var(--line); border-radius: var(--radius); padding: .875rem .625rem; text-align: center; }
+  .stat b { display: block; font-size: 1.75rem; line-height: 1.1; letter-spacing: -0.02em; }
+  .stat span { font-size: .8125rem; color: var(--muted); }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: .875rem; }
+  .card { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 1.125rem; box-shadow: var(--shadow); }
+  .card p { font-size: .9375rem; color: #444a56; margin: 0; }
   .icon {
-    width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; margin-bottom: 10px;
+    width: 2.375rem; height: 2.375rem; border-radius: .625rem; display: grid; place-items: center; margin-bottom: .625rem;
     background: linear-gradient(135deg, rgba(232,121,58,.15), rgba(42,157,143,.15)); color: var(--accent);
   }
-  .icon svg { width: 22px; height: 22px; }
+  .icon svg { width: 1.375rem; height: 1.375rem; }
   .theme { border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); background: #fff; box-shadow: var(--shadow); }
   .theme img { border-radius: 0; }
-  .theme div { padding: 10px 14px 12px; }
-  .theme b { display: block; font-size: 15px; }
-  .theme span { font-size: 13px; color: var(--muted); }
-  .steps { counter-reset: s; display: grid; gap: 10px; }
-  .step { display: grid; grid-template-columns: 40px 1fr; gap: 12px; align-items: start; }
+  .theme div { padding: .625rem .875rem .75rem; }
+  .theme b { display: block; font-size: .9375rem; }
+  .theme span { font-size: .8125rem; color: var(--muted); }
+  .steps { counter-reset: s; display: grid; gap: .625rem; }
+  .step { display: grid; grid-template-columns: 2.5rem 1fr; gap: .75rem; align-items: start; }
   .step::before {
-    counter-increment: s; content: counter(s); width: 40px; height: 40px; border-radius: 50%;
+    counter-increment: s; content: counter(s); width: 2.5rem; height: 2.5rem; border-radius: 50%;
     display: grid; place-items: center; font-weight: 800; color: #fff; background: var(--ink);
   }
   .step p { margin: 0; }
-  ul.ticks { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
-  ul.ticks li { padding-left: 28px; position: relative; color: #3a3f4a; }
+  ul.ticks { list-style: none; padding: 0; margin: .625rem 0 0; display: grid; gap: .5rem; }
+  ul.ticks li { padding-left: 1.75rem; position: relative; color: #3a3f4a; font-size: .9375rem; }
   ul.ticks li::before {
-    content: ""; position: absolute; left: 0; top: 5px; width: 16px; height: 16px; border-radius: 50%;
-    background: var(--accent-2) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path d='M4 8.5l2.5 2.5L12 5.5' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg>") center/12px no-repeat;
+    content: ""; position: absolute; left: 0; top: .3125rem; width: 1rem; height: 1rem; border-radius: 50%;
+    background: var(--accent-2) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path d='M4 8.5l2.5 2.5L12 5.5' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg>") center/.75rem no-repeat;
   }
-  table { width: 100%; border-collapse: collapse; font-size: 14px; }
-  th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  table { width: 100%; border-collapse: collapse; font-size: .875rem; }
+  th, td { text-align: left; padding: .5625rem .625rem; border-bottom: 1px solid var(--line); vertical-align: top; }
   th { background: var(--soft); font-weight: 700; }
   td:first-child { font-weight: 600; white-space: nowrap; }
-  .split { display: grid; grid-template-columns: 1.15fr 1fr; gap: 18px; align-items: center; }
-  .note { background: #fff8f2; border: 1px solid #f6d7c2; border-radius: var(--radius); padding: 14px 16px; font-size: 14px; color: #5a3d2b; }
-  .cta { text-align: center; padding: 30px 20px; border-radius: 18px; color: #fff;
+  .split { display: grid; grid-template-columns: 1.15fr 1fr; gap: 1.125rem; align-items: center; }
+  .note { background: #fff8f2; border: 1px solid #f6d7c2; border-radius: var(--radius); padding: .875rem 1rem; font-size: .875rem; color: #5a3d2b; }
+  .qa { border: 1px solid var(--line); border-radius: .75rem; padding: .75rem 1rem; background: #fff; }
+  .qa + .qa { margin-top: .5rem; }
+  .qa b { display: block; }
+  .qa p { margin: .25rem 0 0; color: #444a56; font-size: .9375rem; }
+  .cta { text-align: center; padding: 1.875rem 1.25rem; border-radius: 1.125rem; color: #fff;
          background: linear-gradient(120deg, #1f2430, #263445 60%, #1f4a4a); }
   .cta h2 { color: #fff; }
   .cta p { color: #cfd6df; margin-bottom: 0; }
-  details { border: 1px solid var(--line); border-radius: 12px; padding: 12px 16px; background: #fff; }
-  details + details { margin-top: 8px; }
-  summary { cursor: pointer; font-weight: 700; }
-  details p { margin: 8px 0 0; color: #444a56; font-size: 15px; }
-  @media (max-width: 640px) {
-    h1 { font-size: 34px; }
-    h2 { font-size: 25px; }
-    .stats { grid-template-columns: repeat(2, 1fr); }
-    .grid2, .grid3, .split { grid-template-columns: 1fr; }
-  }
+  code { font-size: .875em; background: var(--soft); padding: .05em .3em; border-radius: .25rem; }
+  .mt { margin-top: .875rem; }
 </style>
 </head>
 <body>
@@ -111,7 +108,7 @@
   <!-- HERO -->
   <header>
     <div class="eyebrow">Geometry Nodes · Drag &amp; Drop Asset Library · Blender 4.5+</div>
-    <h1 style="margin-top:8px">Stylized <span class="grad">Buildings &amp; Cities</span></h1>
+    <h1>Stylized <span class="grad">Buildings &amp; Cities</span></h1>
     <p class="lead">Drag a whole stylized city into your scene. 24 procedural building styles and 7 city generators &mdash;
       sci-fi, medieval fantasy, Japanese, wild west, desert and post-apocalyptic &mdash; built entirely with Geometry
       Nodes. Every asset stays fully editable: change one seed and you get a new building, or a whole new town.</p>
@@ -127,13 +124,13 @@
       <div class="stat"><b>24</b><span>building styles</span></div>
       <div class="stat"><b>7</b><span>city generators</span></div>
       <div class="stat"><b>950+</b><span>modular kit pieces</span></div>
-      <div class="stat"><b>196</b><span>plants, props &amp; park pieces</span></div>
+      <div class="stat"><b>196</b><span>plants &amp; city props</span></div>
     </div>
   </header>
 
   <!-- THEMES -->
   <section>
-    <h2>Six themes. One click each.</h2>
+    <h2>Six themes. One drag each.</h2>
     <p class="muted">Every theme comes with its own buildings, plants, street furniture, park centre pieces and ground
       colours &mdash; plus a Mixed city that uses all 24 styles at once.</p>
     <div class="frame"><img src="media/themes.gif" width="720" height="540" alt="The seven city generators, one after another"></div>
@@ -143,7 +140,7 @@
   <!-- FEATURES -->
   <section>
     <h2>Built like a real city</h2>
-    <p class="muted">Not just buildings dropped on a grid: blocks, sidewalks, gardens, parks and streets are all generated
+    <p class="muted">Not just buildings dropped on a grid: blocks, sidewalks, gardens, parks and streets are generated
       together, so every layout reads as a place.</p>
     <div class="grid2">
       <div class="card">
@@ -155,7 +152,7 @@
       <div class="card">
         <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="5"/><path d="M12 14v7M8 21h8"/></svg></div>
         <h3>Parks with character</h3>
-        <p>Whole blocks become parks with lawns, cross paths, a plaza, benches and lamps &mdash; and a themed centre piece:
+        <p>Whole blocks become parks with lawns, paths, a plaza, benches and lamps &mdash; and a themed centre piece:
           fountains, a koi pond with a red bridge, a medieval market, an oasis, a windmill or a broken fountain.</p>
       </div>
       <div class="card">
@@ -171,14 +168,11 @@
           bamboo, cacti, agaves, bushes and flower beds &mdash; scattered in natural groves with open lawns.</p>
       </div>
     </div>
-  </section>
-
-  <section>
-    <div class="grid2">
-      <figure style="margin:0"><div class="frame"><img src="media/closeup_street.jpg" width="1200" height="800" alt="Close-up of a sci-fi street with trees, crosswalks and lamps"></div><p class="cap">Sidewalks, street trees, crosswalks</p></figure>
-      <figure style="margin:0"><div class="frame"><img src="media/closeup_park.jpg" width="1200" height="800" alt="Close-up of a park with a fountain"></div><p class="cap">Park block with fountain plaza</p></figure>
-      <figure style="margin:0"><div class="frame"><img src="media/closeup_koi.jpg" width="1200" height="800" alt="Japanese park with koi pond and bridge"></div><p class="cap">Japanese koi pond &amp; cherry trees</p></figure>
-      <figure style="margin:0"><div class="frame"><img src="media/closeup_market.jpg" width="1200" height="800" alt="Medieval market around a well"></div><p class="cap">Medieval market square</p></figure>
+    <div class="grid2 mt">
+      <figure><div class="frame"><img src="media/closeup_street.jpg" width="1200" height="800" alt="Close-up of a sci-fi street with trees, crosswalks and lamps"></div><p class="cap">Sidewalks, street trees, crosswalks</p></figure>
+      <figure><div class="frame"><img src="media/closeup_park.jpg" width="1200" height="800" alt="Close-up of a park with a fountain"></div><p class="cap">Park block with fountain plaza</p></figure>
+      <figure><div class="frame"><img src="media/closeup_koi.jpg" width="1200" height="800" alt="Japanese park with koi pond and bridge"></div><p class="cap">Japanese koi pond &amp; cherry trees</p></figure>
+      <figure><div class="frame"><img src="media/closeup_market.jpg" width="1200" height="800" alt="Medieval market around a well"></div><p class="cap">Medieval market square</p></figure>
     </div>
   </section>
 
@@ -195,7 +189,7 @@
           <div class="step"><p><b>Tweak it in the modifier panel</b><br><span class="muted">Seed, size, floors, blocks, parks, colours &mdash; all live.</span></p></div>
         </div>
       </div>
-      <div class="frame"><img src="media/styles.gif" width="480" height="480" alt="All 24 building styles"></div>
+      <figure><div class="frame"><img src="media/styles.gif" width="480" height="480" alt="All 24 building styles"></div><p class="cap">All 24 building styles</p></figure>
     </div>
   </section>
 
@@ -205,12 +199,12 @@
     <p class="muted">Every city is generated from a seed. Change it, or change the number of blocks and plots, and the
       whole town rebuilds itself &mdash; buildings, gardens, parks, trees and props included.</p>
     <div class="grid2">
-      <figure style="margin:0"><div class="frame"><img src="media/city_seeds.gif" width="640" height="480" alt="Medieval city with different seeds"></div><p class="cap">New seed, new town</p></figure>
-      <figure style="margin:0"><div class="frame"><img src="media/city_grow.gif" width="640" height="480" alt="Desert city growing block by block"></div><p class="cap">From one block to twelve</p></figure>
+      <figure><div class="frame"><img src="media/city_seeds.gif" width="640" height="480" alt="Medieval city with different seeds"></div><p class="cap">New seed, new town</p></figure>
+      <figure><div class="frame"><img src="media/city_grow.gif" width="640" height="480" alt="Desert city growing block by block"></div><p class="cap">From one block to twelve</p></figure>
     </div>
-    <div class="split" style="margin-top:14px">
-      <figure style="margin:0"><div class="frame"><img src="media/turntable.gif" width="560" height="460" alt="Japanese city turntable"></div><p class="cap">Fully 3D &mdash; looks good from every side</p></figure>
-      <figure style="margin:0"><div class="frame"><img src="media/floors.gif" width="420" height="560" alt="Building growing floor by floor"></div><p class="cap">Floors, width, depth, wings, towers</p></figure>
+    <div class="split mt">
+      <figure><div class="frame"><img src="media/turntable.gif" width="560" height="460" alt="Japanese city turntable"></div><p class="cap">Fully 3D &mdash; good from every side</p></figure>
+      <figure><div class="frame"><img src="media/floors.gif" width="420" height="560" alt="Building growing floor by floor"></div><p class="cap">Floors, width, depth, wings, towers</p></figure>
     </div>
   </section>
 
@@ -222,10 +216,10 @@
       <div class="theme"><img src="media/city_medieval_fantasy.jpg" width="1400" height="1000" alt="Medieval Fantasy city"><div><b>Medieval Fantasy</b><span>Tudor houses, taverns, keeps, wizard towers, markets</span></div></div>
       <div class="theme"><img src="media/city_japanese.jpg" width="1400" height="1000" alt="Japanese city"><div><b>Japanese</b><span>Machiya, pagodas, tea houses, cherry trees, koi ponds</span></div></div>
       <div class="theme"><img src="media/city_wild_west.jpg" width="1400" height="1000" alt="Wild West city"><div><b>Wild West</b><span>Saloons, stores, sheriff, boardwalks, cacti, windmills</span></div></div>
-      <div class="theme"><img src="media/city_desert.jpg" width="1400" height="1000" alt="Desert city"><div><b>Desert</b><span>Adobe houses, bazaars, domed halls, palms, oasis fountains</span></div></div>
+      <div class="theme"><img src="media/city_desert.jpg" width="1400" height="1000" alt="Desert city"><div><b>Desert</b><span>Adobe houses, bazaars, domed halls, palms, oases</span></div></div>
       <div class="theme"><img src="media/city_post_apocalyptic.jpg" width="1400" height="1000" alt="Post-Apocalyptic city"><div><b>Post-Apocalyptic</b><span>Scrap shacks, bunkers, ruins, cracked roads, dead trees</span></div></div>
     </div>
-    <div class="theme" style="margin-top:14px"><img src="media/city_mixed.jpg" width="1400" height="1000" alt="Mixed city"><div><b>Mixed</b><span>All 24 styles in one city</span></div></div>
+    <div class="theme mt"><img src="media/city_mixed.jpg" width="1400" height="1000" alt="Mixed city"><div><b>Mixed</b><span>All 24 styles in one city</span></div></div>
   </section>
 
   <!-- BUILDINGS -->
@@ -243,13 +237,13 @@
       <tr><td>Desert</td><td>Adobe House, Bazaar Shop, Domed Hall</td></tr>
       <tr><td>Post-Apocalyptic</td><td>Scrap Shack, Wasteland Bunker, Ruined Block</td></tr>
     </table>
-    <div class="grid2" style="margin-top:14px">
+    <div class="grid2 mt">
       <div class="frame"><img class="crop" src="media/collage_medieval_fantasy.jpg" width="1400" height="2596" alt="Medieval Fantasy styles, four variations each"></div>
       <div class="frame"><img class="crop" src="media/collage_sci_fi.jpg" width="1400" height="2596" alt="Sci-Fi styles, four variations each"></div>
       <div class="frame"><img class="crop" src="media/collage_japanese.jpg" width="1400" height="1400" alt="Japanese styles, four variations each"></div>
       <div class="frame"><img class="crop" src="media/collage_desert.jpg" width="1400" height="1400" alt="Desert styles, four variations each"></div>
     </div>
-    <p class="cap">Four random variations of every style &mdash; same generator, different seeds and sizes</p>
+    <p class="cap">Random variations of every style &mdash; same generator, different seeds and sizes</p>
   </section>
 
   <!-- NATURE -->
@@ -257,9 +251,8 @@
     <h2>Nature that makes it feel alive</h2>
     <p class="muted">Toon foliage with warm, bright tops and cool, darker undersides, a subtle colour shift on every
       plant, and noise-driven groves so parks get open lawns and shady corners.</p>
-    <div class="frame"><img src="media/plants.jpg" width="1800" height="900" alt="Plant catalogue"></div>
-    <p class="cap">A slice of the plant library: one row per theme</p>
-    <div class="grid2" style="margin-top:14px">
+    <figure><div class="frame"><img src="media/plants.jpg" width="1800" height="900" alt="Plant catalogue"></div><p class="cap">A slice of the plant library: one row per theme</p></figure>
+    <div class="grid2 mt">
       <div class="frame"><img src="media/closeup_oasis.jpg" width="1200" height="800" alt="Desert oasis park"></div>
       <div class="frame"><img src="media/closeup_ruins.jpg" width="1200" height="800" alt="Post-apocalyptic streets"></div>
     </div>
@@ -285,36 +278,36 @@
     <div class="grid2">
       <div class="card">
         <h3>What&rsquo;s included</h3>
-        <ul class="ticks" style="margin-top:10px">
+        <ul class="ticks">
           <li>Asset library <code>.blend</code> with 31 object assets and previews</li>
-          <li>Asset catalogs: one per theme plus Cities</li>
+          <li>Asset catalogs: one per theme, plus Cities</li>
           <li>The core <i>SB Building Generator</i> node group for your own kits</li>
           <li>Documentation (install, inputs, tips)</li>
         </ul>
       </div>
       <div class="card">
         <h3>Requirements</h3>
-        <ul class="ticks" style="margin-top:10px">
+        <ul class="ticks">
           <li>Blender 4.5 or newer (tested on 4.5 LTS and 5.2 LTS)</li>
-          <li>EEVEE and Cycles</li>
+          <li>Renders in EEVEE and Cycles</li>
           <li>No add-on, no Python, no internet connection</li>
-          <li>Any system Blender runs on (plain .blend, no binaries)</li>
+          <li>Any system Blender runs on (plain .blend)</li>
         </ul>
       </div>
     </div>
-    <div class="note" style="margin-top:14px"><b>Good to know:</b> buildings are fully detailed, so cities are heavy. A
-      default 3&times;2-block city is roughly 1 to 6.5 million triangles depending on the theme. Turn the outline off
-      while you work, or apply the modifier when the layout is final.</div>
+    <div class="note mt"><b>Good to know:</b> buildings are fully detailed, so cities are heavy. A default
+      3&times;2-block city is roughly 1 to 6.5 million triangles depending on the theme. Turn the outline off while you
+      work, or apply the modifier once the layout is final.</div>
   </section>
 
   <!-- FAQ -->
   <section>
     <h2>FAQ</h2>
-    <details><summary>Do I need to know Geometry Nodes?</summary><p>No. Drag an asset in and use the sliders in the modifier panel. The node trees are open if you want to dig in.</p></details>
-    <details><summary>Can I use only the buildings, without a city?</summary><p>Yes. Every one of the 24 styles is its own drag &amp; drop asset.</p></details>
-    <details><summary>Can I put the city on my own terrain?</summary><p>Yes. Turn off <i>Diorama Base</i> and the city sits on its street level at the object origin.</p></details>
-    <details><summary>Can I make the result static?</summary><p>Apply the modifier to get a regular mesh with materials, ready to edit or export.</p></details>
-    <details><summary>Can I add my own building pieces?</summary><p>Add the <i>SB Building Generator</i> node group from the Core catalog and plug your own kit collections into its Kit inputs.</p></details>
+    <div class="qa"><b>Do I need to know Geometry Nodes?</b><p>No. Drag an asset in and use the sliders in the modifier panel. The node trees are open if you want to dig in.</p></div>
+    <div class="qa"><b>Can I use only the buildings, without a city?</b><p>Yes. Every one of the 24 styles is its own drag &amp; drop asset.</p></div>
+    <div class="qa"><b>Can I put a city on my own terrain?</b><p>Yes. Turn off <i>Diorama Base</i> and the city sits at street level on the object origin.</p></div>
+    <div class="qa"><b>Can I make the result static?</b><p>Apply the modifier to get a regular mesh with materials, ready to edit or export.</p></div>
+    <div class="qa"><b>Can I add my own building pieces?</b><p>Add the <i>SB Building Generator</i> node group from the Core catalog and plug your own kit collections into its Kit inputs.</p></div>
   </section>
 
   <section class="cta">
